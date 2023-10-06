@@ -6,7 +6,7 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel mdm\admin\models\searchs\Assignment */
+/* @var $searchModel app\modules\rbac\models\searchs\Assignment */
 /* @var $usernameField string */
 /* @var $extraColumns string[] */
 
@@ -15,21 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $columns = [
     ['class' => 'yii\grid\SerialColumn'],
-    [
-        'attribute' => 'role',
-        'label' => 'ROLE',
-        'headerOptions' => ['style' => 'text-align: center;'],
-    ],
-    [
-        'attribute' => 'nama',
-        'label' => 'Nama',
-        'headerOptions' => ['style' => 'text-align: center;'],
-    ],
-    [
-        'attribute' => 'username',
-        'label' => 'Username',
-        'headerOptions' => ['style' => 'text-align: center;'],
-    ],
+    $usernameField,
+    'nama',
+    // [
+    //     'attribute' => 'nama',
+    //     // 'value' => function ($model) {
+    //     //     return $model->pegawai->nama_lengkap;
+    //     // },
+    // ],
 ];
 if (!empty($extraColumns)) {
     $columns = array_merge($columns, $extraColumns);
@@ -40,17 +33,40 @@ $columns[] = [
 ];
 ?>
 <div class="assignment-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?php Pjax::begin(); ?>
-    <?=
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => $columns,
-    ]);
-    ?>
-    <?php Pjax::end(); ?>
-
+     <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h5>Assignments</h5>
+                </div>
+                <div class="card-body">
+                    <?php Pjax::begin(); ?>
+                        <div class="table-responsive">
+                            <?=
+                                GridView::widget([
+                                    'dataProvider' => $dataProvider,
+                                    'filterModel' => $searchModel,
+                                    'columns' => [
+                                        ['class' => 'yii\grid\SerialColumn'],
+                                        $usernameField,
+                                        'nama',               
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'contentOptions' => ['style' => 'text-align: center;'],
+                                            'header' => 'Aksi',
+                                            'template' => '{view}'
+                                        ],                          
+                                    ],
+                                    'summaryOptions' => ['class' => 'summary mt-2 mb-2'],
+                                    'pager' => [
+                                        'class' => 'yii\bootstrap4\LinkPager',
+                                    ]
+                                ]);
+                            ?>
+                        </div>
+                    <?php Pjax::end(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

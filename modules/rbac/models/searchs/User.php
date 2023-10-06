@@ -11,11 +11,10 @@ use yii\data\ActiveDataProvider;
  */
 class User extends Model
 {
-    public $pgw_id;
-    public $pgw_username;
-    public $pgw_nama;
-    public $pgw_nomor;
-    public $pgw_aktif;
+    public $id;
+    public $username;
+    public $email;
+    public $status;
     
     /**
      * @inheritdoc
@@ -23,8 +22,8 @@ class User extends Model
     public function rules()
     {
         return [
-            [['pgw_id', 'pgw_aktif'], 'integer'],
-            [['pgw_username', 'pgw_nama', 'pgw_nomor'], 'safe'],
+            [['id', 'status',], 'integer'],
+            [['username', 'email'], 'safe'],
         ];
     }
 
@@ -38,15 +37,11 @@ class User extends Model
     public function search($params)
     {
         /* @var $query \yii\db\ActiveQuery */
-        // $class = Yii::$app->getUser()->identityClass ? : 'app\modules\rbac\models\User';
-        $class = Yii::$app->getUser()->identityClass ? : 'app\models\auth\User';
+        $class = Yii::$app->getUser()->identityClass ? : 'app\modules\rbac\models\User';
         $query = $class::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [ 
-                'pageSize' => Yii::$app->params['setting']['paging']['size']['long']
-            ]
         ]);
 
         $this->load($params);
@@ -56,12 +51,12 @@ class User extends Model
         }
 
         $query->andFilterWhere([
-            'pgw_aktif' => $this->pgw_aktif,
+            'id' => $this->id,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'pgw_username', $this->pgw_username])
-        ->andFilterWhere(['like', 'pgw_nomor', $this->pgw_nomor])
-        ->andFilterWhere(['like', 'pgw_nama', $this->pgw_nama]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
     }

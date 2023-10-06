@@ -18,16 +18,17 @@ $opts = Json::htmlEncode([
 ]);
 $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('_script.js'));
-$animateIcon = ' <i class="fas fa-spinner glyphicon-refresh-animate"></i>';
+$animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i>';
 ?>
+<h1><?=Html::encode($this->title);?></h1>
 <div class="row">
     <div class="col-sm-11">
         <div class="input-group">
-            <input id="inp-route" type="text" class="form-control form-control-sm"
+            <input id="inp-route" type="text" class="form-control"
                    placeholder="<?=Yii::t('rbac-admin', 'New route(s)');?>">
             <span class="input-group-btn">
                 <?=Html::a(Yii::t('rbac-admin', 'Add') . $animateIcon, ['create'], [
-    'class' => 'btn btn-success btn-sm',
+    'class' => 'btn btn-success',
     'id' => 'btn-new',
 ]);?>
             </span>
@@ -38,11 +39,11 @@ $animateIcon = ' <i class="fas fa-spinner glyphicon-refresh-animate"></i>';
 <div class="row">
     <div class="col-sm-5">
         <div class="input-group">
-            <input class="form-control form-control-sm search" data-target="available"
+            <input class="form-control search" data-target="available"
                    placeholder="<?=Yii::t('rbac-admin', 'Search for available');?>">
-            <span class="input-group-btn">
-                <?=Html::a('<span class="fas fa-sync"></span>', ['refresh'], [
-    'class' => 'btn btn-default btn-sm',
+            <span class="input-group-append">
+                <?=Html::a('<span class="fas fa-sync-alt"></span>', ['refresh'], [
+    'class' => 'btn btn-default',
     'id' => 'btn-refresh',
 ]);?>
             </span>
@@ -63,7 +64,7 @@ $animateIcon = ' <i class="fas fa-spinner glyphicon-refresh-animate"></i>';
 ]);?>
     </div>
     <div class="col-sm-5">
-        <input class="form-control form-control-sm search" data-target="assigned"
+        <input class="form-control search" data-target="assigned"
                placeholder="<?=Yii::t('rbac-admin', 'Search for assigned');?>">
         <select multiple size="20" class="form-control list" data-target="assigned"></select>
     </div>

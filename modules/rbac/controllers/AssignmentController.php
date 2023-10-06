@@ -2,6 +2,8 @@
 
 namespace app\modules\rbac\controllers;
 
+use app\models\AkunAknUser;
+use app\models\Identitas;
 use Yii;
 use app\modules\rbac\models\Assignment;
 use app\modules\rbac\models\searchs\Assignment as AssignmentSearch;
@@ -18,9 +20,9 @@ use yii\filters\VerbFilter;
 class AssignmentController extends Controller
 {
     public $userClassName;
-    public $idField = 'id_pegawai';
+    public $idField = 'id';
     public $usernameField = 'username';
-    public $fullnameField='nama';
+    public $fullnameField;
     public $searchClass;
     public $extraColumns = [];
 
@@ -32,7 +34,7 @@ class AssignmentController extends Controller
         parent::init();
         if ($this->userClassName === null) {
             $this->userClassName = Yii::$app->getUser()->identityClass;
-            $this->userClassName = $this->userClassName ? : 'app\models\auth\User';
+            $this->userClassName = $this->userClassName ? : 'app\models\Identitas';
         }
     }
 
@@ -45,6 +47,7 @@ class AssignmentController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
+                    'assign' => ['post'],
                     'assign' => ['post'],
                     'revoke' => ['post'],
                 ],
@@ -132,7 +135,18 @@ class AssignmentController extends Controller
     protected function findModel($id)
     {
         $class = $this->userClassName;
-        if (($user = $class::findIdentity($id)) !== null) {
+        // echo "<pre>";
+        // // print_r($class);
+        // // print_r($id);
+        // print_r(Identitas::findIdentity($id));
+        // // print_r(AkunAknUser::findOne($id));
+        // // print_r(Yii::$app->user->getIdentity());
+        // // print_r($class::findIdentity($id));
+        // echo "</pre>";
+        // die;
+
+        // if (($user = $class::findIdentity($id)) !== null) {
+        if (($user = AkunAknUser::findOne($id)) !== null) {
             return new Assignment($id, $user);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

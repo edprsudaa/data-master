@@ -1,6 +1,6 @@
 <?php
 
-use mdm\admin\components\Configs;
+use app\modules\rbac\components\Configs;
 
 /**
  * Migration table of table_menu

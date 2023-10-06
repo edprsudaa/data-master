@@ -77,17 +77,12 @@ class Configs extends \app\modules\rbac\BaseObject
     /**
      * @var string Menu table name.
      */
-    public $userTable = '{{%sdm_pegawai}}';
+    public $userTable = '{{%user}}';
 
     /**
      * @var integer Default status user signup. 10 mean active.
      */
     public $defaultUserStatus = 10;
-
-    /**
-     * @var integer Number of user role.
-     */
-    public $userRolePageSize = 100;
 
     /**
      * @var boolean If true then AccessControl only check if route are registered.
@@ -260,13 +255,5 @@ class Configs extends \app\modules\rbac\BaseObject
     public static function strict()
     {
         return static::instance()->strict;
-    }
-
-    /**
-     * @return int
-     */
-    public static function userRolePageSize()
-    {
-        return static::instance()->userRolePageSize;
     }
 }

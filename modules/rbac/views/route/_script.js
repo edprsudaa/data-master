@@ -38,7 +38,7 @@ $('.btn-assign').click(function () {
 });
 
 $('#btn-refresh').click(function () {
-    var $icon = $(this).children('span.fas');
+    var $icon = $(this).children('span.glyphicon');
     $icon.addClass('glyphicon-refresh-animate');
     $.post($(this).attr('href'), function (r) {
         updateRoutes(r);

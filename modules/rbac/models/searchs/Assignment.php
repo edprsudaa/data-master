@@ -2,9 +2,11 @@
 
 namespace app\modules\rbac\models\searchs;
 
+use app\models\pegawai\Pegawai;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * AssignmentSearch represents the model behind the search form about Assignment.
@@ -14,50 +16,74 @@ use yii\data\ActiveDataProvider;
  */
 class Assignment extends Model
 {
-    public $userid;
+    public $id;
     public $username;
+    public $nama_lengkap;
     public $nama;
-    public $role;
-    
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['userid'], 'integer'],
-            [['username', 'nama', 'role'], 'safe'],
+            [['id', 'username'], 'safe'],
+            ['nama_lengkap', 'safe'],
+            ['nama', 'safe'],
         ];
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('rbac-admin', 'ID'),
+            'username' => Yii::t('rbac-admin', 'Username'),
+            'name' => Yii::t('rbac-admin', 'Name'),
+            'nama' => 'Nama Pegawai',
+            'nama_lengkap' => 'Nama Pegawai',
+        ];
+    }
+
+    /**
+     * Create data provider for Assignment model.
+     * @param  array                        $params
+     * @param  \yii\db\ActiveRecord         $class
+     * @param  string                       $usernameField
+     * @return \yii\data\ActiveDataProvider
      */
     public function search($params, $class, $usernameField)
     {
-        /* @var $query \yii\db\ActiveQuery */
-        // $class = Yii::$app->getUser()->identityClass ? : 'app\modules\rbac\models\User';
-        $class = Yii::$app->getUser()->identityClass ? : 'app\models\auth\User';
         $query = $class::find();
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            // 'pagination' => [ 
-            //     'pageSize' => Yii::$app->params['setting']['paging']['size']['long']
-            // ]
         ]);
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'username', $this->username])
-        ->andFilterWhere(['like', 'role', $this->role])
-        ->andFilterWhere(['like', 'nama', $this->nama]);
+        $query->andFilterWhere(['ilike', $usernameField, $this->username]);
+        $query->andFilterWhere(['ilike', 'nama', $this->nama]);
+        // if ($this->nama_lengkap) {
+        //     $pegawai = Pegawai::find()
+        //         ->select([
+        //             'id_nip_nrp'
+        //         ])
+        //         ->where(['ilike', 'nama_lengkap', $this->nama_lengkap])
+        //         ->asArray()
+        //         ->all();
+        //     $usernamePegawai = ArrayHelper::getColumn($pegawai, 'id_nip_nrp');
+
+        //     // echo "<pre>";
+        //     // print_r($pegawai);
+        //     // echo "</pre>";
+        //     // die;
+        //     // echo 'heloo';
+        //     $query->andFilterWhere(['in', 'username', $usernamePegawai]);
+        // }
 
         return $dataProvider;
     }

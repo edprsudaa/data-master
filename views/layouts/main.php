@@ -11,10 +11,12 @@ if (class_exists('yii\debug\Module')) {
 // use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
+use app\assets\AppAsset;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
 use aryelds\sweetalert\SweetAlert;
+use hail812\adminlte\widgets\Menu;
+use app\modules\rbac\components\Helper;
 
 
 AppAsset::register($this);
@@ -94,536 +96,334 @@ AppAsset::register($this);
                 <span class="brand-text font-weight-light"><?= Yii::$app->params['name-aplikasi'] ?></span>
             </a>
 
-            <!-- Sidebar -->
             <div class="sidebar">
 
-                <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="<?= Yii::$app->urlManager->createUrl('site/index') ?>" class="nav-link">
-                                <i class="nav-icon far fa fa-home"></i>
-                                <p>Home</p>
-                            </a>
-                        </li>
 
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Master SDM
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/negara') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kewarganegaraan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/provinsi') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Provinsi</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/kabupaten') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kabupaten</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/kecamatan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kecamatan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/kelurahan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kelurahan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/suku') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Suku</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Pegawai</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai-hari-libur') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Hari Libur</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai-agama') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Agama</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai-unit-penempatan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Unit Penempatan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai-unit-sub-penempatan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Jabatan Penempatan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai-pendidikan-umum') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Pendidikan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai-jurusan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Jurusan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pegawai-status-kepegawaian') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Status Kepegawaian</p>
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Type User</p>
-                                    </a>
-                                </li> -->
-                            </ul>
-                        </li>
 
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa fa-file"></i>
-                                <p>
-                                    Master Pendaftaran
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-cara-keluar') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Cara Keluar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-status-keluar') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Status Keluar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-kelompok-unit-layanan') ?>" class="nav-link">
-                                    <i class="nav-icon far fa-circle"></i>
-                                    <p>Kelompok Unit Layanan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-kelas-rawat') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kelas Rawat</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-debitur') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Debitur</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-debitur-detail') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Debitur Detail</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-kiriman') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kiriman</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-kiriman-detail') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kiriman Detail</p>
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-loket') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Loket</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-loket-unit') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Loket Unit</p>
-                                    </a>
-                                </li> -->
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/pendaftaran-cara-masuk-unit') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Cara Masuk Unit</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                    <?php
 
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa fa-cash-register"></i>
-                                <p>
-                                    Master Kasbank
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/kasbank-loket') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Loket</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-notes-medical"></i>
-                                <p>
-                                    Master MEDIS
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-tindakan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Tindakan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-sk-tarif') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>SK Tarif</p>
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-tarif-tindakan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Tarif Tindakan</p>
-                                    </a>
-                                </li> -->
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-tarif-tindakan-unit') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Tarif Tindakan Unit</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-kamar') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Kamar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-tarif-kamar') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Tarif Kamar</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-masalah-keperawatan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Masalah Keperawatan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-intervensi-keperawatan') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Intervensi Keperawatan</p>
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-icd9cm') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>ICD 9 CM</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-icd10cm') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>ICD 10 CM</p>
-                                    </a>
-                                </li> -->
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-icd9cm2010') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>ICD 9 CM 2010</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-icd10cm2010') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>ICD 10 CM 2010</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/medis-anatomi') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Anatomi</p>
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/bpjs-poli') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Poli BPJS</p>
-                                    </a>
-                                </li> -->
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/bpjskes-mapping-poli-new') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Mapping Poli BPJS</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-cube"></i>
-                                <p>
-                                    Data Paket MCU
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/mcu-paket') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Paket MCU</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/mcu-paket-tindakan-mcu') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Paket Tindakan MCU</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/mcu-dokter-paket-tindakan-mcu') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Dokter Paket Tindakan MCU</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- <li class="nav-item">
-                            <a href="<?= Yii::$app->urlManager->createUrl('/tind-kel/mapping-kode-jenis') ?>" class="nav-link">
-                                <i class="nav-icon far fa fa-chart-pie"></i>
-                                <p>Mapping Kode Jenis Tindakan</p>
-                            </a>
-                        </li> -->
-
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa fa-hospital"></i>
-                                <p>
-                                    Master Rumah Sakit
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/master-data-dasar-rs') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Data Rumah Sakit</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/komputer-rs') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Komputer Rumah Sakit</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa fa-users"></i>
-                                <p>
-                                    Manajemen User
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/aplikasi') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Aplikasi</p>
-                                    </a>
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/user') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Pengguna</p>
-                                    </a>
-                                    <a href="<?= Yii::$app->urlManager->createUrl('/akses-unit') ?>" class="nav-link">
-                                        <i class="nav-icon far fa-circle"></i>
-                                        <p>Akses Unit Pengguna</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
+                    $menuItems = [
                         
-                       
+                        ['label' => 'Home', 'icon' => 'home', 'url' => ['./site']],
+
+                        [
+                            'label' => 'Master SDM',
+                            'icon' => 'user',
+                            'items' => [
+
+                                ['label' => 'Negara', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/negara/index']],
+
+                                ['label' => 'Provinsi', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/provinsi/index']],
+
+                                ['label' => 'Kabupaten', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/kabupaten/index']],
+
+                                ['label' => 'Kecamatan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/kecamatan/index']],
+
+                                ['label' => 'Kelurahan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/kelurahan/index']],
+
+                                ['label' => 'Suku', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/suku/index']],
+
+                                ['label' => 'Golongan Darah', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/golongan-darah/index']],
+
+                                ['label' => 'Penghasilan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/penghasilan/index']],
+
+                                ['label' => 'Jenis Identitas', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/jenis-identitas/index']],
+
+                                ['label' => 'Jenis Kelamin', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/jenis-kelamin/index']],
+
+                                ['label' => 'Status Kedudukan Keluarga', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/status-kedudukan-keluarga/index']],
+
+                                ['label' => 'Pegawai', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai/index']],
+
+                                ['label' => 'Hari Libur', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai-hari-libur/index']],
+
+                                ['label' => 'Agama', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai-agama/index']],
+
+                                ['label' => 'Unit Penempatan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai-unit-penempatan/index']],
+
+                                ['label' => 'Jabatan Penempatan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai-unit-sub-penempatan/index']],
+
+                                ['label' => 'Pendidikan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai-pendidikan-umum/index']],
+
+                                ['label' => 'Jurusan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai-jurusan/index']],
+
+                                ['label' => 'Status Kepegawaian', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pegawai-status-kepegawaian/index']],
+                            ]
+                        ],
+
+                        [
+                            'label' => 'Master Pendaftaran',
+                            'icon' => 'file',
+                            'items' => [
+
+                                ['label' => 'Cara Keluar', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-cara-keluar/index']],
+
+                                ['label' => 'Status Keluar', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-status-keluar/index']],
+
+                                ['label' => 'Kelompok Unit Layanan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-kelompok-unit-layanan/index']],
+
+                                ['label' => 'Kelas Rawat', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-kelas-rawat/index']],
+
+                                ['label' => 'Debitur', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-debitur/inde']],
+
+                                ['label' => 'Debitur Detail', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-debitur-detail/index']],
+
+                                ['label' => 'Kiriman', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-kiriman/index']],
+
+                                ['label' => 'Kiriman Detail', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-kiriman-detail/index']],
+
+                                // ['label' => 'Loket', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['./pendaftaran-loket'],'active' => in_array(\Yii::$app->controller->id, ['pendaftaran-loket'])],
+
+                                // ['label' => 'Loket Unit', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['./pendaftaran-loket-unit'],'active' => in_array(\Yii::$app->controller->id, ['pendaftaran-loket-unit'])],
+
+                                ['label' => 'Cara Masuk Unit', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-cara-masuk-unit/index']],
+                            ]
+                        ],
+
+                        [
+                            'label' => 'Master Kasbank',
+                            'icon' => 'cash-register',
+                            'items' => [
+
+                                ['label' => 'Loket', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/kasbank-loket/index']],
+                            ]
+                        ],
+
+                        [
+                            'label' => 'Master MEDIS',
+                            'icon' => 'notes-medical',
+                            'items' => [
+
+                                ['label' => 'Tindakan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-tindakan/index']],
+
+                                ['label' => 'SK Tarif', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-sk-tarif/index']],
+
+                                // ['label' => 'Tarif Tindakan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['./medis-tarif-tindakan'],'active' => in_array(\Yii::$app->controller->id, ['medis-tarif-tindakan'])],
+
+                                ['label' => 'Tarif Tindakan Unit', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-tarif-tindakan-unit/index']],
+
+                                ['label' => 'Kamar', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-kamar/index']],
+
+                                ['label' => 'Tarif Kamar', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-tarif-kamar/index']],
+
+                                ['label' => 'Masalah Keperawatan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-masalah-keperawatan/index']],
+
+                                ['label' => 'Intervensi Keperawatan', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-intervensi-keperawatan/index']],
+
+                                // ['label' => 'ICD 9 CM', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-icd9cm'],'active' => in_array(\Yii::$app->controller->id, ['medis-icd9cm'])],
+
+                                // ['label' => 'ICD 10 CM', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-icd10cm'],'active' => in_array(\Yii::$app->controller->id, ['medis-icd10cm'])],
+
+                                ['label' => 'ICD 9 CM 2010', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-icd9cm2010/index']],
+
+                                ['label' => 'ICD 10 CM 2010', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-icd10cm2010/index']],
+
+                                ['label' => 'Anatomi', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/medis-anatomi/index']],
+
+                                // ['label' => 'Poli BPJS', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['./bpjs-poli'],'active' => in_array(\Yii::$app->controller->id, ['bpjs-poli'])],
+
+                                ['label' => 'Mapping Poli BPJS', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['./bpjskes-mapping-poli-new/index']],
+
+                            ]
+                        ],
+
+                        [
+                            'label' => 'Data Paket MCU',
+                            'icon' => 'cube',
+                            'items' => [
+
+                                ['label' => 'Paket MCU', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/mcu-paket/index']],
+
+                                ['label' => 'Paket Tindakan MCU', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/mcu-paket-tindakan-mcu/index']],
+
+                                ['label' => 'Dokter Paket Tindakan MCU', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/mcu-dokter-paket-tindakan-mcu/index']],
+                            ]
+                        ],
+
+                        // ['label' => 'Mapping Kode Jenis Tindakan', 'icon' => 'chart-pie', 'url' => ['/tind-kel/mapping-kode-jenis'], 'active' => in_array(\Yii::$app->controller->id,['tind-kel/mapping-kode-jenis'])],
+
+                        [
+                            'label' => 'Master Rumah Sakit',
+                            'icon' => 'hospital',
+                            'items' => [
+
+                                ['label' => 'Data Rumah Sakit', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/master-data-dasar-rs/index']],
+
+                                ['label' => 'Komputer Rumah Sakit', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/komputer-rs/index']],
+
+                            ]
+                        ],
+
+                        [
+                            'label' => 'Manajemen User',
+                            'icon' => 'users',
+                            'items' => [
+
+                                ['label' => 'Aplikasi', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/aplikasi/index']],
+
+                                ['label' => 'Pengguna', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/user/index']],
+
+                                ['label' => 'Akses Unit Pengguna', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/akses-unit/index']],
+
+
+                            ]
+                        ],
+
+                        [
+                            'label' => 'RBAC',
+                            'icon' => 'users',
+                            'items' => [
+
+                                // ['label' => 'User', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/rbac/user/index']],
+
+                                ['label' => 'Route', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/rbac/route/index']],
+
+                                ['label' => 'Permission', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/rbac/permission/index']],
+
+                                ['label' => 'Role', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/rbac/role/index']],
+
+                                ['label' => 'Assignment', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/rbac/assignment/index']],
+
+                            ]
+                        ],
+                    ];
+
+                    $menuItems = Helper::filter($menuItems);
+
+                    echo Menu::widget([
+                        'items' => $menuItems,
+                        'class' => 'nav nav-pills nav-sidebar flex-column nav-flat nav-compact nav-child-indent text-sm'
+                    ]);
+
+                    ?>
+
+                    <!-- <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">   -->
 
                         <!-- <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                <i class="nav-icon far fa fa-th"></i>
-                <p>
-                    Data Tindakan Kelas
-                    <i class="fas fa-angle-left right"></i>
-                </p>
-                </a>
-                <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="<?= Yii::$app->urlManager->createUrl('/tind-kel') ?>" class="nav-link">
-                        <i class="nav-icon far fa-circle"></i>
-                        <p>Tindakan Kelas</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= Yii::$app->urlManager->createUrl('/tind-kelas') ?>" class="nav-link">
-                        <i class="nav-icon far fa-circle"></i>
-                        <p>Tindakan Kelas Detail</p>
-                    </a>
-                </li>
-                </ul>
-            </li> -->
+                            <a href="#" class="nav-link">
+                            <i class="nav-icon far fa fa-th"></i>
+                            <p>
+                                Data Tindakan Kelas
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= Yii::$app->urlManager->createUrl('/tind-kel') ?>" class="nav-link">
+                                    <i class="nav-icon far fa-circle"></i>
+                                    <p>Tindakan Kelas</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= Yii::$app->urlManager->createUrl('/tind-kelas') ?>" class="nav-link">
+                                    <i class="nav-icon far fa-circle"></i>
+                                    <p>Tindakan Kelas Detail</p>
+                                </a>
+                            </li>
+                            </ul>
+                        </li> -->
 
                         <!-- <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-cara-keluar') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Cara Keluar</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-cara-masuk-unit') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Cara Masuk Unit</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-jenis-identitas') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Jenis Identitas</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-kebiasaan') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Kebiasaan</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-kelas') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Kelas</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-kelompok-unit') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Kelompok Unit</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-pekerjaan') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Pekerjaan</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-pendidikan') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Pendidikan</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-penyakit') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Penyakit</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-riwayat') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>RIwayat</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-smf') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>SMF</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-status-kawin') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Status Kawin</p>
-                </a>
-            </li>
-            
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('/master-status-keluar') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-chart-pie"></i>
-                    <p>Status Keluar</p>
-                </a>
-            </li>
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-cara-keluar') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Cara Keluar</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-cara-masuk-unit') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Cara Masuk Unit</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-jenis-identitas') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Jenis Identitas</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-kebiasaan') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Kebiasaan</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-kelas') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Kelas</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-kelompok-unit') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Kelompok Unit</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-pekerjaan') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Pekerjaan</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-pendidikan') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Pendidikan</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-penyakit') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Penyakit</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-riwayat') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>RIwayat</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-smf') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>SMF</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-status-kawin') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Status Kawin</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('/master-status-keluar') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-chart-pie"></i>
+                                <p>Status Keluar</p>
+                            </a>
+                        </li>
 
-            <li class="nav-item">
-                <a href="<?= Yii::$app->urlManager->createUrl('site/about') ?>" class="nav-link">
-                    <i class="nav-icon far fa fa-info-circle"></i>
-                    <p>About</p>
-                </a>
-            </li> -->
-                    </ul>
+                        <li class="nav-item">
+                            <a href="<?= Yii::$app->urlManager->createUrl('site/about') ?>" class="nav-link">
+                                <i class="nav-icon far fa fa-info-circle"></i>
+                                <p>About</p>
+                            </a>
+                        </li> -->
+                    <!-- </ul> -->
                 </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
@@ -674,20 +474,16 @@ AppAsset::register($this);
         </div>
         <!-- /.content-wrapper -->
 
-        <footer class="main-footer">
-            <!-- To the right -->
+        <footer class="main-footer">           
             <div class="float-right d-none d-sm-inline">
                 RSUD Arifin Ahmad Provinsi Riau
-            </div>
-            <!-- Default to the left -->
+            </div>           
             <strong>Copyright &copy; <?= date('Y') ?> <a href="#"><?= Yii::$app->params['name-aplikasi'] ?></a>.</strong>
             All rights reserved.
         </footer>
 
     </div>
-    <!-- ./wrapper -->
 
-    <!-- REQUIRED SCRIPTS -->
     <?php $this->endBody() ?>
 </body>
 

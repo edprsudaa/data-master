@@ -26,15 +26,16 @@ YiiAsset::register($this);
 $opts = Json::htmlEncode([
     'items' => $model->getItems(),
 ]);
-// echo'<pre/>';print_r($model->getItems());die();
 $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('_script.js'));
-$animateIcon = ' <i class="fas fa-spinner glyphicon-refresh-animate"></i>';
+$animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i>';
 ?>
 <div class="assignment-index">
+    <h1><?=$this->title;?></h1>
+
     <div class="row">
         <div class="col-sm-5">
-            <input class="form-control form-control-sm search" data-target="available"
+            <input class="form-control search" data-target="available"
                    placeholder="<?=Yii::t('rbac-admin', 'Search for available');?>">
             <select multiple size="20" class="form-control list" data-target="available">
             </select>
@@ -53,7 +54,7 @@ $animateIcon = ' <i class="fas fa-spinner glyphicon-refresh-animate"></i>';
 ]);?>
         </div>
         <div class="col-sm-5">
-            <input class="form-control form-control-sm search" data-target="assigned"
+            <input class="form-control search" data-target="assigned"
                    placeholder="<?=Yii::t('rbac-admin', 'Search for assigned');?>">
             <select multiple size="20" class="form-control list" data-target="assigned">
             </select>

@@ -18,7 +18,7 @@ class DefaultController extends \yii\web\Controller
      */
     public function actionIndex($page = 'README.md')
     {
-        if (preg_match('/^docs\/images\/image\d+\.png$/',$page)) {
+        if (strpos($page, '.png') !== false) {
             $file = Yii::getAlias("@app/modules/rbac/{$page}");
             return Yii::$app->getResponse()->sendFile($file);
         }
