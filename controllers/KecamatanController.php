@@ -87,23 +87,23 @@ class KecamatanController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = new Kecamatan();
-       
+
         if ($model->load(Yii::$app->request->post())) {
 
             $model->created_at = date('Y-m-d H:i:s');
             $model->created_by = Yii::$app->user->identity->id;
             $model->aktif   = 1;
-			
-        //    echo '<pre>';
-        //    print_r($model);die;
-           
+
+            //    echo '<pre>';
+            //    print_r($model);die;
+
             if ($model->save()) {
                 return [
                     'status' => 200,
                     'message' => 'Data Berhasil Ditambah.',
                     'data'  => $model
                 ];
-            }else{
+            } else {
                 $errors = $model->getErrors();
                 return [
                     'status' => 400,
@@ -111,19 +111,17 @@ class KecamatanController extends Controller
                     'data'  => $errors
                 ];
             }
-
-        } 
-      
+        }
     }
-  
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        Yii::$app->response->format = Response::FORMAT_JSON;     
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
         if (Yii::$app->request->post()) {
-            $model->kode_prov_kab_kecamatan= Yii::$app->request->post('kode_kecamatan');
+            $model->kode_prov_kab_kecamatan = Yii::$app->request->post('kode_kecamatan');
             $model->nama = Yii::$app->request->post('nama_kecamatan');
             $model->kode_prov_kab = Yii::$app->request->post('kode_kabupaten');
             $model->kode_prov = Yii::$app->request->post('kode_provinsi');
@@ -138,7 +136,7 @@ class KecamatanController extends Controller
                     'message' => 'Data Berhasil Diubah.',
                     'data'  => $model
                 ];
-            }else{
+            } else {
                 $errors = $model->getErrors();
                 return [
                     'success' => false,
@@ -146,10 +144,7 @@ class KecamatanController extends Controller
                     'data'  => $errors
                 ];
             }
-            
         }
-
-       
     }
 
     /**
@@ -159,14 +154,14 @@ class KecamatanController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
- 
+
 
     public function actionDelete($id)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = $this->findModel($id);
 
-        $model->is_deleted =1;
+        $model->is_deleted = 1;
         $model->updated_at = date('Y-m-d H:i:s');
         $model->updated_by = Yii::$app->user->identity->id;
 
@@ -175,15 +170,13 @@ class KecamatanController extends Controller
                 'status' => 200,
                 'message' => 'Data Berhasil Dihapus.'
             ];
-
-        }else{               
-            $errors = $model->getErrors();      
+        } else {
+            $errors = $model->getErrors();
             return [
                 'status' => 400,
                 'message' => 'Terjadi kesalahan saat Menghapus Data Ini.',
                 'data'  => $errors
             ];
-
         }
     }
 
@@ -206,7 +199,7 @@ class KecamatanController extends Controller
     public function actionGetKecamatanByKabupaten()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-       
+
         $post = Yii::$app->request->post();
 
         if (isset($_POST['depdrop_parents'])) {
@@ -223,16 +216,11 @@ class KecamatanController extends Controller
                 $kec = [];
 
                 foreach ($kecamatans as $kecamatan) {
-                    $kec[]=['id'=>$kecamatan['kode_prov_kab_kecamatan'], 'name'=>$kecamatan['nama']];
+                    $kec[] = ['id' => $kecamatan['kode_prov_kab_kecamatan'], 'name' => $kecamatan['nama']];
                 }
 
-                return ['output'=>$kec, 'selected'=>$kabupaten_kode];
-                
+                return ['output' => $kec, 'selected' => $kabupaten_kode];
             }
         }
-        
     }
-
-
-    
 }

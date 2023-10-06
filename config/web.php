@@ -34,7 +34,7 @@ $config = [
             'identityClass' => 'app\models\Identitas',
             'enableAutoLogin' => true,
             // 'loginUrl' => 'http://localhost:8080/masuk?b=http://localhost:9090/',
-            
+
             // 'loginUrl' => 'http://localhost/sso/web/masuk?b=http://localhost/data_master/web/',
             'loginUrl' => '@.sso/masuk?b=http://master.simrs.aa',
             'identityCookie' => ['name' => '_identity-id', 'httpOnly' => true, 'domain' => 'rsud-arifin.localhost'],
@@ -60,7 +60,7 @@ $config = [
         ],
         'db' => $db,
         'dbSso' => $dbSso,
-		'dbSimrsOld' => $dbSimrsOld,
+        'dbSimrsOld' => $dbSimrsOld,
 
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -75,12 +75,12 @@ $config = [
         ],
 
         'authManager' => [
-        'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
-        'db' => $db,
-        'itemTable' => 'master.auth_item',
-        'assignmentTable' => 'master.auth_assignment',
-        'itemChildTable' => 'master.auth_item_child',
-        'ruleTable' => 'master.auth_rule'
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+            'db' => $db,
+            'itemTable' => 'master.auth_item',
+            'assignmentTable' => 'master.auth_assignment',
+            'itemChildTable' => 'master.auth_item_child',
+            'ruleTable' => 'master.auth_rule'
         ],
         'assetManager' => [
             'bundles' => [
@@ -109,7 +109,7 @@ $config = [
                     ]
                 ],
 
-                
+
 
 
             ],
@@ -132,20 +132,16 @@ $config = [
             'class' => 'app\modules\rbac\Module',
         ],
         'gridviewKartik' =>  [
-        'class' => '\kartik\grid\Module',
-        // your other grid module settings
+            'class' => '\kartik\grid\Module',
+            // your other grid module settings
         ]
-        
+
     ],
     'as access' => [
-        'class' => 'app\modules\rbac\components\AccessControl',
+        'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-        // 'debug/*',
-        // 'gii/*',
-        // 'auth/*',
-        // 'referensi/*',
-        'rbac/*',
-        '*'
+            'auth/*',
+            'api/api-referensi/*',
         ]
     ],
 ];
