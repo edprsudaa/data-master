@@ -7,8 +7,9 @@ use yii\grid\GridView;
 use app\components\Helper;
 use app\models\MedisKamar;
 use kartik\select2\Select2;
-use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap4\ActiveForm;
+use app\models\PegawaiUnitPenempatan;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MedisTarifKamarSearch */
@@ -16,6 +17,8 @@ use yii\helpers\ArrayHelper;
 
 $this->title = 'Tarif Kamar';
 $this->params['breadcrumbs'][] = $this->title;
+
+$unit = PegawaiUnitPenempatan::find()->where(['aktif'=> 1])->orderBy(['nama'=> SORT_ASC])->all();
 
 // echo "<pre>";
 // print_r($sk_tarif);
@@ -96,8 +99,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'columns' => [
                                                 ['class' => 'yii\grid\SerialColumn'],
 
-                                            //'id',
-                                            [
+                                                [
+                                                    'label' => 'Unit', 
+                                                    'attribute' => 'selectedUnit',
+                                                    'value' => 'kamar.unit.nama', 
+                                                    'filter' => Select2::widget([
+                                                        'model' => $searchModel,
+                                                        'attribute' => 'selectedUnit',
+                                                        'data' =>  ArrayHelper::map($unit,'kode','nama'),
+                                                        'options' => [
+                                                            'placeholder' => 'Pilih Berdasarkan Nama Unit...'
+                                                        ],
+                                                        'pluginOptions' => [
+                                                            'allowClear' => true
+                                                        ],
+                                                    ]),
+                                                ],
+
+                                                [
                                                     'attribute' => 'kamar_id',
                                                     // 'value' => 'kamar.no_kamar',
                                                     'value' => function ($model){

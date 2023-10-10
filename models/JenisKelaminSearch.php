@@ -3,25 +3,22 @@
 namespace app\models;
 
 use yii\base\Model;
-use app\models\MedisTarifKamar;
+use app\models\JenisKelamin;
 use yii\data\ActiveDataProvider;
 
 /**
- * MedisTarifKamarSearch represents the model behind the search form of `app\models\MedisTarifKamar`.
+ * NegaraSearch represents the model behind the search form of `app\models\Negara`.
  */
-class MedisTarifKamarSearch extends MedisTarifKamar
+class JenisKelaminSearch extends JenisKelamin
 {
-
-      public $kamar_id; // Existing attributes
-    public $selectedUnit; 
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'kamar_id', 'sk_tarif_id', 'biaya', 'created_by', 'updated_by', 'is_deleted'], 'integer'],
-            [['created_at', 'updated_at','selectedUnit'], 'safe'],
+            [['id'], 'integer'],
+            [['kode', 'nama', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
         ];
     }
 
@@ -43,11 +40,11 @@ class MedisTarifKamarSearch extends MedisTarifKamar
      */
     public function search($params)
     {
-        $searchModel = new MedisTarifKamarSearch();
+        $query = JenisKelamin::find()
+            ->where(['deleted_at' => null]);
 
-        $query = MedisTarifKamar::find()->alias('a')->joinWith(['kamar.unit unit'])->where(['<>', 'a.is_deleted', 1]);
+        // add conditions that should always apply here
 
-      
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -63,16 +60,9 @@ class MedisTarifKamarSearch extends MedisTarifKamar
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'unit.kode' => $this->selectedUnit,
-            'kamar_id' => $this->kamar_id,
-            'sk_tarif_id' => $this->sk_tarif_id,
-            'biaya' => $this->biaya,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'is_deleted' => $this->is_deleted,
         ]);
+
+        $query->andFilterWhere(['ilike', 'nama', $this->nama]);
 
         return $dataProvider;
     }
