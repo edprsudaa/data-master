@@ -165,7 +165,7 @@ AppAsset::register($this);
 
                                 ['label' => 'Kelas Rawat', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-kelas-rawat/index']],
 
-                                ['label' => 'Debitur', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-debitur/inde']],
+                                ['label' => 'Debitur', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-debitur/index']],
 
                                 ['label' => 'Debitur Detail', 'iconStyle' => 'far', 'icon' => 'dot-circle','url' => ['/pendaftaran-debitur-detail/index']],
 
